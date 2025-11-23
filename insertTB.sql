@@ -89,6 +89,18 @@ VALUES (
 
 INSERT INTO produtos (nome, descricao, categoria, marca, modelo, preco, quantidade_estoque, unidade_medida)
 VALUES (
+    'Smartphone Galaxy S24',
+    'Smartphone com processador Snapdragon 8 Gen 3, 12GB RAM, 256GB',
+    'Telefonia',
+    'Samsung',
+    'Galaxy S24',
+    5299.00,
+    50,
+    'UN'
+);
+
+INSERT INTO produtos (nome, descricao, categoria, marca, modelo, preco, quantidade_estoque, unidade_medida)
+VALUES (
     'Smartphone Galaxy S25',
     'Smartphone com 256GB, 12GB RAM, câmera tripla de 108MP',
     'Eletrônicos',

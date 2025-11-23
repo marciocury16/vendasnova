@@ -1,17 +1,22 @@
 -- trigger para atualizar estoque após inserir uma venda na tabela vendas
 
 CREATE OR REPLACE TRIGGER trg_atualiza_estoque
-AFTER INSERT ON vendas
+AFTER INSERT OR UPDATE ON vendas
 FOR EACH ROW
 BEGIN
-    -- Atualiza a quantidade em estoque do produto vendido
-    UPDATE produtos
-    SET quantidade_estoque = quantidade_estoque - :NEW.quantidade
-    WHERE id_produto = :NEW.id_produto;
-    
-    -- Opcional: você pode adicionar verificação de estoque negativo
-    -- IF (quantidade_estoque - :NEW.quantidade < 0) THEN
-    --    RAISE_APPLICATION_ERROR(-20001, 'Estoque insuficiente!');
-    -- END IF;
+    -- Caso seja INSERT: diminui a quantidade vendida do estoque
+    IF INSERTING THEN
+        UPDATE produtos
+        SET quantidade_estoque = quantidade_estoque - :NEW.quantidade
+        WHERE id_produto = :NEW.id_produto;
+    END IF;
+
+    -- Caso seja UPDATE: ajusta o estoque com base na diferença
+    IF UPDATING THEN
+        UPDATE produtos
+        SET quantidade_estoque = quantidade_estoque - (:NEW.quantidade - :OLD.quantidade)
+        WHERE id_produto = :NEW.id_produto;
+    END IF;
+
 END;
 /
