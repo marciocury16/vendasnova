@@ -152,35 +152,35 @@ VALUES (
 
 INSERT INTO vendas (id_usuario, id_produto, quantidade)
 VALUES (
-    31,  -- id do usuário Mariana Silva
+    22,  -- id do usuário Mariana Silva
     1,   -- id do produto Smartphone Galaxy S25
     2    -- quantidade comprada
 );
 
 INSERT INTO vendas (id_usuario, id_produto, quantidade)
 VALUES (
-    32,  -- id do usuário Lucas Pereira
+    23,  -- id do usuário Lucas Pereira
     2,   -- id do produto Notebook ThinkPad X1
     1    -- quantidade comprada
 );
 
 INSERT INTO vendas (id_usuario, id_produto, quantidade)
 VALUES (
-    33,  -- id do usuário Camila Oliveira
+    24,  -- id do usuário Camila Oliveira
     3,   -- id do produto Fone de Ouvido WH-1000XM5
     3    -- quantidade comprada
 );
 
 INSERT INTO vendas (id_usuario, id_produto, quantidade)
 VALUES (
-    34,  -- id do usuário Rafael Santos
+    25,  -- id do usuário Rafael Santos
     4,   -- id do produto Cafeteira Expresso Barista
     1    -- quantidade comprada
 );
  
  INSERT INTO vendas (id_usuario, id_produto, quantidade)
 VALUES (
-    35,  -- id do usuário Beatriz Costa
+    21,  -- id do usuário Beatriz Costa
     5,   -- id do produto Bicicleta Mountain Bike XTR
     2    -- quantidade comprada
 );
