@@ -1,47 +1,34 @@
 -- procedure para cancelar uma venda:
 
 CREATE OR REPLACE PROCEDURE cancelar_venda (
-    p_id_venda IN NUMBER,
-    p_msg OUT VARCHAR2
+    p_id_venda IN NUMBER
 )
-AS
-    v_id_produto NUMBER;
-    v_quantidade NUMBER;
+IS
+    v_id_produto   vendas.id_produto%TYPE;
+    v_quantidade   vendas.quantidade%TYPE;
 BEGIN
-    -- Verifica se a venda existe e captura produto e quantidade
-    BEGIN
-        SELECT id_produto, quantidade
-        INTO v_id_produto, v_quantidade
-        FROM vendas
-        WHERE id_venda = p_id_venda;
-    EXCEPTION
-        WHEN NO_DATA_FOUND THEN
-            p_msg := 'Venda não encontrada.';
-            RETURN;
-    END;
+    -- 1. Buscar os dados da venda
+    SELECT id_produto, quantidade
+    INTO v_id_produto, v_quantidade
+    FROM vendas
+    WHERE id_venda = p_id_venda;
 
-    -- Remove a venda
+    -- 2. Devolver a quantidade ao estoque do produto
+    UPDATE produtos
+    SET quantidade_estoque = quantidade_estoque + v_quantidade,
+        data_atualizacao = SYSDATE
+    WHERE id_produto = v_id_produto;
+
+    -- 3. Remover a venda
     DELETE FROM vendas
     WHERE id_venda = p_id_venda;
 
-    -- Devolve o estoque do produto
-    UPDATE produtos
-    SET quantidade_estoque = quantidade_estoque + v_quantidade
-    WHERE id_produto = v_id_produto;
-
-    p_msg := 'Venda cancelada com sucesso e estoque atualizado.';
+    COMMIT;
 EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Venda não encontrada.');
     WHEN OTHERS THEN
-        p_msg := 'Erro inesperado: ' || SQLERRM;
-END;
-/
-
--- usar:
-
-DECLARE
-    v_mensagem VARCHAR2(200);
-BEGIN
-    cancelar_venda(1, v_mensagem); -- Cancela a venda com id_venda = 1
-    DBMS_OUTPUT.PUT_LINE(v_mensagem);
-END;
+        ROLLBACK;
+        RAISE;
+END cancelar_venda;
 /

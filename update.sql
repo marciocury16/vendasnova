@@ -11,13 +11,12 @@ WHERE id_venda = 25;
 --
 
 UPDATE clientes
-
-SET nome = 'Juliana dos santos',
-email = 'juliana.santos@abcd.com.br'
+SET ativo = 'N'
 WHERE id_cliente = 21;
 
 
 
+-- teste para procedure de incluir nova venda
 
 SET SERVEROUTPUT ON;
 
@@ -25,7 +24,7 @@ DECLARE
     v_msg VARCHAR2(200);
 BEGIN
     registrar_venda(
-        p_id_cliente => 22,
+        p_id_cliente => 21,
         p_id_produto => 2,
         p_quantidade => 1,
         p_msg        => v_msg
@@ -34,3 +33,11 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE(v_msg);
 END;
 /
+
+-- teste para cancelar uma venda
+
+BEGIN
+    cancelar_venda(42);   -- troque pelo id_venda real da tabela
+END;
+/
+

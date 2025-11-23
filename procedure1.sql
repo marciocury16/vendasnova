@@ -1,3 +1,6 @@
+-- procedure para registrar uma venda nova
+
+
 CREATE OR REPLACE PROCEDURE registrar_venda (
     p_id_cliente   IN NUMBER,
     p_id_produto   IN NUMBER,
