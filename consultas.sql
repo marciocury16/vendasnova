@@ -2,6 +2,27 @@ SELECT * FROM produtos;
 SELECT * FROM clientes;
 SELECT * FROM vendas;
 
+SELECT
+ SUM(v.quantidade * p.preco) AS faturamento_total
+FROM produtos p
+JOIN vendas v ON p.id_produto = v.id_venda;
+
+
+SELECT 
+p.nome,
+p.quantidade_estoque,
+v.id_usuario,
+v.id_venda
+FROM vendas v
+INNER JOIN produtos p ON p.id_produto = v.id_produto
+ORDER BY id_usuario;
+
+
+
+
+
+
+
 -- clientes e vendas e produtos
 
 SELECT 
@@ -73,5 +94,7 @@ FROM vendas v
 JOIN produtos p ON v.id_produto = p.id_produto
 GROUP BY p.nome
 ORDER BY total_vendido DESC;
+
+
 
 
